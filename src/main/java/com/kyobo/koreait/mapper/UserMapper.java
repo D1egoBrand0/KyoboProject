@@ -11,13 +11,8 @@ public interface UserMapper {
     @Select("SELECT * FROM `kyobo_db`.`user_tbl` WHERE `email` = #{email}")
     UserVO get_user(String id);
 
-    @Insert("INSERT INTO `kyobo_db`.`user_tbl` (#{email}, #{password}, #{name}, #{birth}, #{phone}, default) VALUES " +
-            "<foreach collection="">"
-
-
-
-
-    )
+    @Insert("INSERT INTO `kyobo_db`.`user_tbl` VALUES " +
+            "(#{email}, #{password}, #{name}, #{birth}, #{phone}, default)")
     void register_user(UserVO userVO);
 }
 
