@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>EX를 확인하기</title>
+</head>
+
+<body>
+    <div>
+        <span th:text="${person.name}"></span><br/>
+        <span th:text="${person.age}"></span><br/>
+        <span th:text="${person.addr}"></span><br/>
+        <span th:text="${person.birth}"></span><br/>
+    </div>
+
+    <div th:object="${person}">
+        <span th:text="*{name}"></span> <br/>
+        <span th:text="*{age}"></span> <br/>
+        <span th:text="*{addr}"></span> <br/>
+<!--/*        mm은 월이 아니다 MM이어야 한다.*/-->
+        <span th:text="${#temporals.format(person.birth,'yyyy년MM월dd일')}"></span> <br/>
+    </div>
+
+
+
+    <script th:inline="javascript">
+        const person = [[${person}]];
+        const testMap = [[${testMap}]];
+        const fruitsSet = [[${fruitsSet}]];
+        console.log(person);
+        console.log(testMap);
+        console.log(fruitsSet);
+    </script>
+    <h1>확인해보자</h1>
+    <div th:text="${person}"> </div>  <br/>
+    <div th:text="${testMap}"> </div><br/>
+    <div th:text="${fruitsSet}"> </div><br/>
+</body>
+</html>

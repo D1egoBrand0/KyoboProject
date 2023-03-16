@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!-- xmlns로 타임리프를 사용한다.-->
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>메인</title>
+    <link th:href="@{/css/main.css}">
+    <script th:src="@{/js/main.js}" defer></script>
+</head>
+<body>
+    <h1>메인페이지</h1>
+    <th:block sec:authorize="!isAuthenticated()">
+        <a href="/user/login">로그인</a>
+        <a href="/user/register">회원가입</a>
+    </th:block>
+    <th:block sec:authorize="isAuthenticated()">
+        <div> 장바구니</div>
+        <a href="/user/logout">로그아웃</a>
+        <a href="/user/mypage">마이페이지</a>
+    </th:block>
+
+
+
+</body>
+</html>

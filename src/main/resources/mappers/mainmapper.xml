@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kyobo.koreait.mapper.MainMapper">
+    <select id="get_all_books" resultType="com.kyobo.koreait.domain.vos.BookVO">
+        select * from `kyobo_db`.`book_tbl`;
+    </select>
+
+    <insert id="insert_cart">
+        INSERT INTO `cart_tbl` VALUES (`userEmail`, `book_ISBN`)
+<!--        메인컨트롤러에서 이메일을 가져와야한다.-->
+        (#{email), #{bookISBN})
+        ON DUPLICATED KEY UPDATE
+        (`bookISBN` = `bookISBN` + 1)
+        ;
+    </insert>
+</mapper>

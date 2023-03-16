@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>등록부분</title>
+    <script th:src="@{/js/user/register.js}" src="../../static/js/user/register.js" defer></script>
+    <link href="../../static/css/user/register.css" th:href="@{/css/user/register.css}" rel="stylesheet" type="text/css" />
+</head>
+<body id="body">
+    <form th:action="@{/user/register}" method="post">
+        <table id="regist-table">
+            <thead>
+                <tr>
+                    <td>흐음</td>
+                    <td>입력</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ID</td>
+
+                    <td><input type="email" name="email" placeholder="email을 넣어주세용"></td>
+                </tr>
+                <tr>
+                    <td>중복체크</td>
+                    <td><input type="button" name="duplication_email_check" value="중복체크" onclick="email_authenticate()"></td>
+                </tr>
+                <tr>
+                    <td>PW</td>
+                    <td><input type="text" name="password" placeholder="PW를 넣어주세용"></td>
+                </tr>
+                <tr>
+                    <td>PW재확인</td>
+                    <td><input type="text" name="pw_check" placeholder="위와 동일한 PW"></td>
+                </tr>
+                <tr>
+                    <td>이름</td>
+                    <td><input type="text" name="name"></td>
+                </tr>
+                <tr>
+                    <td>생년월일</td>
+                    <td><input type="date" name="birth"></td>
+                    <input type="hidden" name="birth">
+                </tr>
+                <tr>
+                    <td>휴대전화</td>
+                    <td><input type="text" name="phone" maxlength="13" placeholder="010-0000-1111"></td>
+                </tr>
+                <tr>
+                    <td>인증번호받기</td>
+                    <td><input type="button" name="message_configure_num" value="문자메시지 전송" onclick="phone_authenticate()"></td>
+                </tr>
+                <tr>
+                    <td>인증번호</td>
+                    <td><input type="text" name="message_num" ></td>
+                </tr>
+                <tr>
+                    <td>인증번호확인</td>
+                    <td><input type="button" name="phone_num_check_confirm" value="번호확인" onclick="phoneNumber_authenticate_confirm()"></td>
+                </tr>
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <!--                    <td>제출하기</td>-->
+                    <td><input type="button"  value="가입하기" name="regist-mail"></td>
+                    <td><input type="button" value="돌아가기" name="go-back" onclick=""></td>
+                </tr>
+            </tfoot>
+        </table><br/><br/><br/><br/><br/>
+
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    </form>
+
+</body>
+</html>
