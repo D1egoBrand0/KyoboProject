@@ -1,0 +1,12 @@
+header{
+    /*display: inline-flex;*/
+    justify-content: space-between;
+}
+#main-letters{
+    text-align: left;
+    width: auto;
+    height: 5px;
+}
+#search-all-things{
+    text-align: center;
+}

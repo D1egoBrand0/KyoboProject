@@ -1,5 +1,8 @@
 package com.kyobo.koreait.controller;
 
+import com.kyobo.koreait.domain.dtos.CartDTO;
+import com.kyobo.koreait.domain.dtos.HeartDTO;
+import com.kyobo.koreait.domain.vos.CartVO;
 import com.kyobo.koreait.domain.vos.UserVO;
 import com.kyobo.koreait.mapper.UserMapper;
 import com.kyobo.koreait.service.UserService;
@@ -8,15 +11,16 @@ import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Log4j2
 @Controller
@@ -79,6 +83,50 @@ public class UserController {
     @GetMapping("/mypage")
     public void mypage_user(){
         log.info(" ---------- 마이페이지 컨트롤러-------");
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/logout")
+    public void logout(){   log.info("---------로그아웃----------");    }
+
+
+    @ResponseBody
+    @GetMapping("/cart")
+    public List<CartDTO> get_cart(
+            @AuthenticationPrincipal UserDetails userDetails
+    ){
+        userService.get_cart(userDetails.getUsername());
+        return null;
+    }
+    @ResponseBody
+    @PostMapping("/cart")
+    public boolean insert_cart(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody List<CartVO> cartVOS
+    ){
+        log.info(" ==== insert_cart ==== ");
+        return userService.insert_books_in_cart(userDetails, cartVOS);
+//        on duplicate key update SQL문 활용하기
+    }
+    @ResponseBody
+    @PostMapping("/main/heart")
+    public boolean insert_heart(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody List<HeartDTO> heartDTOS
+    ){
+        log.info(" ===== insert_heart ===== ");
+        return userService.insert_books_in_heart(userDetails, heartDTOS);
+    }
+
+
+    @ResponseBody
+    @PutMapping()
+    public boolean modify_cart(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody CartVO cartVO
+    ){
+        log.info("-*----------------modify_ cart------------------");
+        return userService.modify_book_count_in_cart(userDetails.getUsername(),cartVO);
     }
 
 }
