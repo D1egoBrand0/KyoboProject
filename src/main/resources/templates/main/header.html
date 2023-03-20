@@ -13,17 +13,22 @@
 <body>
     <header th:fragment="header">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-        <h1 id="main-letters">메인페이지</h1><br/>
+        <h1 id="main-letters"><img src="https://contents.kyobobook.co.kr/resources/fo/images/common/ink/img_logo_kyobo@2x.png"></h1><br/>
+        <div id="registers-menu" >
+            <th:block sec:authorize="!isAuthenticated()">
+                <a href="/user/login">로그인</a>
+                <a href="/user/register">회원가입</a>
+            </th:block>
+            <th:block sec:authorize="isAuthenticated()" >
+                <a href="/main/cart"> 장바구니</a>
+                <a href="/user/logout">로그아웃</a>
+                <a href="/user/mypage">마이페이지</a>
+            </th:block>
+        </div>
         <div id="search-all-things"> 통합검색 <input type="text" placeholder="검색어"> <input type="button" value="검색"></div>
-        <th:block sec:authorize="!isAuthenticated()">
-            <a href="/user/login">로그인</a>
-            <a href="/user/register">회원가입</a>
-        </th:block>
-        <th:block sec:authorize="isAuthenticated()">
-            <a href="/main/cart"> 장바구니</a>
-            <a href="/user/logout">로그아웃</a>
-            <a href="/user/mypage">마이페이지</a>
-        </th:block>
+
+
+
     </header>
 </body>
 </html>

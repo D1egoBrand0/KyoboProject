@@ -3,9 +3,12 @@ package com.kyobo.koreait.controller;
 import com.kyobo.koreait.domain.dtos.CartDTO;
 import com.kyobo.koreait.domain.dtos.HeartDTO;
 import com.kyobo.koreait.domain.vos.BookVO;
+import com.kyobo.koreait.domain.vos.CartVO;
 import com.kyobo.koreait.service.MainService;
+import com.kyobo.koreait.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -34,5 +37,13 @@ public class MainController {
     }
 
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/main/cart")
+    public void cart(){ log.info("-------장바구니가즈아----------");}
 
+
+    @GetMapping("/main/details/{bookISBN}")
+    public void book_details(){
+
+    }
 }

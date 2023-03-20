@@ -12,11 +12,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartDTO {
-    private CartVO cartVO;
-    private BookVO bookVO;
+//    private CartVO cartVO;
+//    private BookVO bookVO;
 
     private int no;
     private int bookCount;
+    private String bookISBN;
     private String title;
     private String price;
 }

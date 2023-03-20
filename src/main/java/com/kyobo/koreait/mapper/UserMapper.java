@@ -28,7 +28,7 @@ public interface UserMapper {
     boolean modify_book_count_in_cart(CartVO cartVO);
 
 //    장바구니에 있는 책 삭제하기
-    boolean delete_book_in_cart(List<CartDTO> cartDTOS);
+    boolean delete_book_in_cart(List<CartVO> cartVOS);
 
 //    장바구니 추가
     boolean insert_books_in_cart(List<CartVO> cartVOS);

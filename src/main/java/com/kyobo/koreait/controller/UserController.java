@@ -90,16 +90,19 @@ public class UserController {
     public void logout(){   log.info("---------로그아웃----------");    }
 
 
+
+
+//    여기서 메인으로 보내지말고 메인에서는 get매핑으로 단순하게 보고
     @ResponseBody
-    @GetMapping("/cart")
+    @GetMapping("/main/cart")
     public List<CartDTO> get_cart(
             @AuthenticationPrincipal UserDetails userDetails
     ){
-        userService.get_cart(userDetails.getUsername());
-        return null;
+        log.info("-----------장바구니 오는거 맞아?---------");
+        return userService.get_cart(userDetails.getUsername());
     }
     @ResponseBody
-    @PostMapping("/cart")
+    @PostMapping("/main/cart")
     public boolean insert_cart(
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody List<CartVO> cartVOS
@@ -108,6 +111,28 @@ public class UserController {
         return userService.insert_books_in_cart(userDetails, cartVOS);
 //        on duplicate key update SQL문 활용하기
     }
+
+    @ResponseBody
+    @PutMapping("/main/cart")
+    public boolean modify_cart(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody CartVO cartVO
+    ){
+        log.info("-*----------------modify_ cart------------------");
+        return userService.modify_book_count_in_cart(userDetails.getUsername(),cartVO);
+    }
+
+
+    @ResponseBody
+    @DeleteMapping("/cart")
+    public boolean delete_cart(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody List<CartVO> cartVOS
+    ){
+        log.info("-----------delete_cart 장바구니삭제, 유저컨트롤러---------");
+        return userService.delete_book_in_cart(userDetails, cartVOS);
+    }
+
     @ResponseBody
     @PostMapping("/main/heart")
     public boolean insert_heart(
@@ -119,14 +144,5 @@ public class UserController {
     }
 
 
-    @ResponseBody
-    @PutMapping()
-    public boolean modify_cart(
-            @AuthenticationPrincipal UserDetails userDetails,
-            @RequestBody CartVO cartVO
-    ){
-        log.info("-*----------------modify_ cart------------------");
-        return userService.modify_book_count_in_cart(userDetails.getUsername(),cartVO);
-    }
 
 }
