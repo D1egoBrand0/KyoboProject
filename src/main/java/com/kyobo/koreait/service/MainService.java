@@ -1,5 +1,6 @@
 package com.kyobo.koreait.service;
 
+import com.kyobo.koreait.domain.dtos.BookDTO;
 import com.kyobo.koreait.domain.dtos.CartDTO;
 import com.kyobo.koreait.domain.dtos.HeartDTO;
 import com.kyobo.koreait.domain.vos.BookVO;
@@ -20,6 +21,18 @@ public class MainService {
         return mapper.get_all_books();
     }
 
+    public BookVO get_book_by_isbn(String bookISBN){return mapper.get_book_by_isbn(bookISBN);}
 
+    public BookDTO find_specific_book(
+            String searchKeyword,
+            int nowPage
+    ) {
+        List<BookVO> bookVOS = mapper.find_specific_book(searchKeyword);
+        BookDTO bookDTO = new BookDTO(bookVOS,nowPage);
+        return bookDTO;
+    }
+
+
+//    public BookDTO get_all_books_by
 
 }

@@ -10,7 +10,7 @@
     <meta th:name="${_csrf.parameterName}" th:content="${_csrf.token}">
     <title>메인</title>
     <link rel="stylesheet" th:href="@{/css/main/main.css}" href="../../static/css/main/main.css">
-    <script th:src="@{/js/main.js}" src="../../static/js/main.js" defer></script>
+    <script th:src="@{/js/main/main.js}" src="../../static/js/main/main.js" defer></script>
 </head>
 <body>
     <th:block th:replace="~{/main/header :: header}"></th:block>
@@ -53,6 +53,19 @@
 <!--                <span><input class="book-info-heart" type="button" value="하트"></span>-->
 <!--            </div>-->
 <!--        </section>-->
+        <select class="search-result-sub-btn">
+            <option value="8">2줄 보기</option>
+            <option value="12">3줄 보기</option>
+            <option value="16">4줄 보기</option>
+        </select>
+
+        <div>
+            <span> 1 </span>
+            <span> 1 </span>
+            <span> 1 </span>
+            <span> 1 </span>
+        </div>
+
     </main>
 
 

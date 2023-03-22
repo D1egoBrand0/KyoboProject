@@ -13,4 +13,7 @@ public interface MainMapper {
     //책 정보 가져오기
     List<BookVO> get_all_books();
 
+    BookVO get_book_by_isbn(String bookISBN);
+//    책제목을 통합검색으로 찾기(DB로 찾아서 하는게 맞다.)
+    List<BookVO> find_specific_book(String searchKeyword);
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>제  목 : [[${bookVO.ISBN}}]]</div>
+    <div>저  자 : [[${bookVO.author}}]]</div>
+    <div>출판사 : [[${bookVO.publisher}}]]</div>
+    <div>소  개 : [[${bookVO.introduce}}]]</div>
+    <div>내  용 : [[${bookVO.contents}}]]</div>
+    <div>가  격 : [[${bookVO.price}}]]</div>
+    <div>평  가 : [[${bookVO.rating}}]]</div>
+
+</body>
+</html>

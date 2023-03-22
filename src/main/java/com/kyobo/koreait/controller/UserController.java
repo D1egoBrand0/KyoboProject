@@ -29,8 +29,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserMapper userMapper;
+
 
     @GetMapping("/login")
     public void login_user_get(){    }
