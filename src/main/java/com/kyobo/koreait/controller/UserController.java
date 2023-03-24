@@ -2,6 +2,7 @@ package com.kyobo.koreait.controller;
 
 import com.kyobo.koreait.domain.dtos.CartDTO;
 import com.kyobo.koreait.domain.dtos.HeartDTO;
+import com.kyobo.koreait.domain.dtos.OrderDTO;
 import com.kyobo.koreait.domain.vos.CartVO;
 import com.kyobo.koreait.domain.vos.UserVO;
 import com.kyobo.koreait.mapper.UserMapper;
@@ -93,7 +94,7 @@ public class UserController {
 
 //    여기서 메인으로 보내지말고 메인에서는 get매핑으로 단순하게 보고
     @ResponseBody
-    @GetMapping("/main/cart")
+    @GetMapping("/cart")
     public List<CartDTO> get_cart(
             @AuthenticationPrincipal UserDetails userDetails
     ){
@@ -101,7 +102,7 @@ public class UserController {
         return userService.get_cart(userDetails.getUsername());
     }
     @ResponseBody
-    @PostMapping("/main/cart")
+    @PostMapping("/cart")
     public boolean insert_cart(
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody List<CartVO> cartVOS
@@ -112,7 +113,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @PutMapping("/main/cart")
+    @PutMapping("/cart")
     public boolean modify_cart(
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody CartVO cartVO
@@ -129,7 +130,7 @@ public class UserController {
             @RequestBody List<CartVO> cartVOS
     ){
         log.info("-----------delete_cart 장바구니삭제, 유저컨트롤러---------");
-        return userService.delete_book_in_cart(userDetails, cartVOS);
+        return userService.delete_book_in_cart(userDetails.getUsername(), cartVOS);
     }
 
     @ResponseBody
@@ -143,5 +144,21 @@ public class UserController {
     }
 
 
+//    ---------------주문관련---------------------
+    @ResponseBody
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/order")
+    public String insert_order(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody OrderDTO orderDTO
+    ){
+        log.info("----insert_order 상품주문하기--------");
+//        현재 로그인 된 유저 정보와 자바스크립트에서 받아온 DTO 객체 정보를 넘겨줌
+        boolean orderResult = userService.insert_payment_order(userDetails.getUsername(),orderDTO);
+        if(!orderResult){
+            return "/error/main";
+        }
+        return "/main/order";
+    }
 
 }

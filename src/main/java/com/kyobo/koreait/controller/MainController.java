@@ -83,6 +83,12 @@ public class MainController {
 
     }
 
+//    장바구니에서 현재 주문내역 확인 페이지
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/main/order")
+    public void order_complete_page(){
+        log.info("----------maincontroller 주문 확인----------");
+    }
 
 
 }

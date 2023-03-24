@@ -4,6 +4,9 @@ const bookCartContainer = document.getElementById("book-cart-container");
 const bookInfoContainer = document.getElementById("book-info-container");
 const removeAllBtn = document.getElementById("remove-all-btn");
 const heartAllBtn = document.getElementById("heart-all-btn");
+const orderProceedBtn = document.getElementById('order-proceed-btn');
+const orderInfoContainer = document.getElementById('order-info-container');
+const allPrice =document.getElementById("order-total-price").textContent
 
 
 get_cart();
@@ -78,18 +81,24 @@ function create_book_list_in_cart(cartlist){
         }
     }
 
-    function get_clicked_boxes(){
-        const boxes = [];
-        [...bookInfoContainer].forEach(container => {
-            const classList = constainer.children.item(0).classList;
-        })
 
-    }
 
 }
 
+//선택되어있는 모든 컨테이너 가져오기
+function get_clicked_boxes(){
+    const containers = [];
+    [...bookInfoContainer].forEach(container => {
+        const className = container.querySelector('i').className;
+        if(className.includes('fa-solid')){
+            containers.push(container);
+        }
+    });
+    return containers;
+}
 
-removeAllBtn.onclick = checkBox_allclick;
+
+removeAllBtn.onclick = checkBox_all_click;
 function checkBox_all_click(checkbox) {
     if (checkbox.className.contains('fa-solid')) {
         checkbox.className = 'fa-regular fa-circle-check';
@@ -98,5 +107,47 @@ function checkBox_all_click(checkbox) {
     }
 }
 
+// console.log(allPrice);
+/*---------------결제/주문--------------*/
+// 주문하기 버튼 누를때 작동
+orderProceedBtn.onclick = () => {
+    // 주문총액가져오기
+    // 서버에 넘겨줄 body 값 프레임 생성하기
+    const body= {
+        // orderDTO의 구성요소들
+        paymentVO: {paymentAmount : allPrice},//"내가 주문할 총액값"
+        cartVOS:[
+            // // json형태에서 대문자 인식을 못한다고 함
+            // {isbn: "1"},
+            // {isbn: "2"},
+            // {isbn: "3"}
+        ]
+    }
+
+    // 현재 선택되어있는 ISBN값 가져오기
+    const containers = get_clicked_boxes();
+    containers.forEach(container => {
+        const isbnValue = container.querySelector(".book-info-isbn").value;
+        body.cartVOS.push({isbn : isbnValue});
+    });
 
 
+
+
+    if(body.cartVOS.length === 0) {
+        alert('상품을 하나라도 선택해주세요!');
+    }else{
+        //
+        fetch('/user/order',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "X-CSRF-TOKEN": csrfToken
+            },
+            body: JSON.stringify(body)})
+            .then(value => value.text())
+            .then(value => {location.href = value});
+    }
+
+
+}
