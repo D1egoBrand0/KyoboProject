@@ -33,11 +33,11 @@ public class MainController {
        return "/main/main";
     }
 
-    @ResponseBody
-    @GetMapping("/main/books")
-    public List<BookVO> get_all_books(){
-        return mainService.get_all_books();
-    }
+//    @ResponseBody
+//    @GetMapping("/main/books")
+//    public List<BookVO> get_all_books(){
+//        return mainService.get_all_books();
+//    } // 이미있어서 주석처리
 
 
     @PreAuthorize("isAuthenticated()")
@@ -73,13 +73,17 @@ public class MainController {
 //        return "으악";
 //    }
     @ResponseBody
-    @GetMapping("/main/books/{searchKeyword}")
+//    @GetMapping("/main/books/{searchKeyword}")
+    @GetMapping("/main/books")
     public BookDTO find_specific_book(
-            @PathVariable String searchKeyword,
+//            @PathVariable String searchKeyword,
+            @RequestParam(defaultValue = "") String searchKeyword,
+            @RequestParam(defaultValue = "rating") String order,
+            @RequestParam(defaultValue = "8") int pagePerArticle,
             @RequestParam(defaultValue = "1") int nowPage
     ){
         log.info("--------------maincontroller의 단어 검색정보-------");
-        return mainService.find_specific_book(searchKeyword, nowPage);
+        return mainService.find_specific_book(searchKeyword, order, pagePerArticle, nowPage);
 
     }
 

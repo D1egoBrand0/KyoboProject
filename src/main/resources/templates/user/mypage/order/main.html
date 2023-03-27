@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>주문내역</title>
+</head>
+<body>
+    <h3> 주문내역 페이지</h3>
+    <table>
+        <thead>
+            <tr>
+                <td>주문번호</td>
+                <td>결제일시</td>
+                <td>총 가격</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="paymentVO : ${paymentVOS}">
+                <td><a th:href="@{/user/order/detail/} + ${paymentVO.orderNo}}"></a>[[${paymentVO.orderNo}}]]</td>
+                <td th:text="${#dates.format(paymentVO.orderTime, 'yyyy-MM-dd HH:mm:ss')}"><!--                    [[${paymentVO.orderTime}}]]--></td>
+                <td>[[${paymentVO.paymentAmount}}]]</td>
+            </tr>
+        </tbody>
+
+
+    </table>
+
+</body>
+</html>

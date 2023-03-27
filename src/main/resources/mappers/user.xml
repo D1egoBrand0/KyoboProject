@@ -77,6 +77,19 @@
         </foreach>
     </insert>
 
+    <select id="get_payment" resultType="com.kyobo.koreait.domain.vos.PaymentVO">
+        SELECT * FROM `payment_tbl` WHERE `userEmail` = #{userEmail}
+    </select>
+
+
+
+    <select id="get_order" resultType="com.kyobo.koreait.domain.dtos.CartDTO">
+        SELECT *
+        FROM `kyobo_db`.`order_tbl` `ORDER`
+        INNER JOIN `book_tbl` `BOOK`
+        ON BOOK.ISBN = ORDER.bookISBN
+        WHERE orderNo = #{orderNo};
+    </select>
 </mapper>
 
 

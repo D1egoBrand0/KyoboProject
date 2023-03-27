@@ -16,7 +16,8 @@
         <input type="submit" value="로그인"><br/>
 
         <input type="checkbox" name=""> 아이디 저장
-        <input type="checkbox" name="remember-me"> 자동로그인
+        <input type="checkbox" name="remember-me"> 자동로그인<br/>
+        <a href="/oauth2/authorization/kakao">카카오 로그인</a>
         <br/>
         <input type="button" value="아이디/비밀번호 찾기">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">

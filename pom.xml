@@ -91,6 +91,15 @@
         </dependency>
 
 
+<!--      카카오로그인 oauth2 -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-client -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <version>2.7.9</version>
+        </dependency>
+
+
 
     </dependencies>
 

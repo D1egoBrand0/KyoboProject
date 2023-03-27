@@ -6,6 +6,7 @@ import com.kyobo.koreait.domain.dtos.OrderDTO;
 import com.kyobo.koreait.domain.dtos.UserDTO;
 import com.kyobo.koreait.domain.enums.OrderState;
 import com.kyobo.koreait.domain.vos.CartVO;
+import com.kyobo.koreait.domain.vos.OrderVO;
 import com.kyobo.koreait.domain.vos.PaymentVO;
 import com.kyobo.koreait.domain.vos.UserVO;
 import com.kyobo.koreait.mapper.UserMapper;
@@ -94,6 +95,12 @@ public class UserService {
 
     /********************   결제/주문 관련   *******************************/
 //    결제내역 + 부분내역 추가하기 결제가 제대로 이루어지면 주문내역에 추가
+
+//    주문했던 결제 내역만 목록을 가져온다.
+    public List<PaymentVO> get_payment(String userEmail){
+        return userMapper.get_payment(userEmail);
+    }
+
     public boolean insert_payment_order(String userEmail, OrderDTO orderDTO){
 //        주문유저정보 설정하기
         PaymentVO paymentVO = orderDTO.getPaymentVO();
@@ -118,6 +125,10 @@ public class UserService {
     }
 
 
+
+    public List<CartDTO> get_order(String orderNO){
+        return userMapper.get_order(orderNO);
+    }
 
 
 

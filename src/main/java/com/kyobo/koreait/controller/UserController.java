@@ -4,6 +4,7 @@ import com.kyobo.koreait.domain.dtos.CartDTO;
 import com.kyobo.koreait.domain.dtos.HeartDTO;
 import com.kyobo.koreait.domain.dtos.OrderDTO;
 import com.kyobo.koreait.domain.vos.CartVO;
+import com.kyobo.koreait.domain.vos.PaymentVO;
 import com.kyobo.koreait.domain.vos.UserVO;
 import com.kyobo.koreait.mapper.UserMapper;
 import com.kyobo.koreait.service.UserService;
@@ -16,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserMapper userMapper;
 
 
     @GetMapping("/login")
@@ -80,9 +84,39 @@ public class UserController {
 
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/mypage")
+    @GetMapping("/mypage/order")
     public void mypage_user(){
         log.info(" ---------- 마이페이지 컨트롤러-------");
+    }
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/mypage/order/main/")
+    public void mypage_orde_main(
+            @AuthenticationPrincipal UserDetails userDetails,
+            Model model
+    ){
+        log.info(" ---------- 마이페이지 컨트롤러-------");
+        log.info("  ====== mypage_order - 유저의 마이페이지 - 주문/배송 메인화면 =======");
+//        해당 유저가 결제한 결제 내역들을 가져온다.(결제 내역만 가져오고 상세는 없음)
+//        주문한 유저정보, 결제일시, 총 가격, 주문 번호만 가지고 있음
+        List<PaymentVO> paymentVOS = userService.get_payment(userDetails.getUsername());
+        model.addAttribute("paymentVOS",paymentVOS);
+    }
+
+
+
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/mypage/order/detail/{orderNo}")
+    public void mypage_order_detail(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable String orderNo,
+            Model model
+    ){
+        log.info(" ---------- 유저 컨트롤러 -------");
+        log.info("  ====== mypage_order - 유저의 마이페이지 - 상세페이지 =======");
+        List<CartDTO> cartDTOS = userService.get_order(orderNo);
+        model.addAttribute("cartDTOS",cartDTOS);
+
     }
 
     @PreAuthorize("isAuthenticated()")

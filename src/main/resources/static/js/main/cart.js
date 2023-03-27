@@ -149,5 +149,12 @@ orderProceedBtn.onclick = () => {
             .then(value => {location.href = value});
     }
 
+}
+
+function heart_cart(){
+    const containers = get_clicked_boxes();
+    containers.forEach(container)
+
+
 
 }
