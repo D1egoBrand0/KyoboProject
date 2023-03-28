@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>간단한 지도 표시하기</title>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=p4uij52bj8"></script>
+</head>
+<body>
+<div id="map" style="width:100%;height:400px;"></div>
+
+<script>
+    var mapOptions = {
+        center: new naver.maps.LatLng(35.8714354,128.601445),
+        zoom: 15  //(1부터 21까지 존재 21은 지도간격 5m라서 무쓸모)
+    };
+
+    var map = new naver.maps.Map('map', mapOptions);
+</script>
+</body>
+</html>

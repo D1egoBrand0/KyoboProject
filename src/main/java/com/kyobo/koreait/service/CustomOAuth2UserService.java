@@ -1,10 +1,12 @@
 package com.kyobo.koreait.service;
 
 import com.kyobo.koreait.domain.dtos.UserDTO;
+import com.kyobo.koreait.domain.enums.UserRole;
 import com.kyobo.koreait.domain.vos.UserVO;
 import com.kyobo.koreait.mapper.UserMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -12,6 +14,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -46,7 +50,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 //            log.info("Attr key" + k);
 //            log.info("Attr value" + v);
 //        });
-        return oAuth2User;
+        return get_user_by_email(userEmail);
     }
 
 //    카카오로 접속한 유저의 이메일을 반환하는 메소드
@@ -62,9 +66,22 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private UserDTO get_user_by_email(String userEmail){
         UserVO userVO = userMapper.get_user(userEmail);
         if(userVO == null){     // DB에 user_tbl의 id에 해당 이메일 유저가 없으면
+            log.info("해당유저가 존재하지 않음");
+            userVO = new UserVO(userEmail,"","","","",UserRole.USER);
+//            userVO.setRole(UserRole.USER);
             userMapper.register_user(userVO);   // 가입시키기
+            log.info("회원가입한 새로운 유저 : " + userEmail);
         }
-        return null;
+        Collection<SimpleGrantedAuthority> collection =
+                Collections.singleton(new SimpleGrantedAuthority( "ROLE_" + userVO.getRole().name()));
+        return new UserDTO(
+                userVO.getEmail(),
+                userVO.getPassword(),
+                userVO.getName(),
+                userVO.getBirth(),
+                userVO.getPhone(),
+                collection
+        );
     }
 
 }

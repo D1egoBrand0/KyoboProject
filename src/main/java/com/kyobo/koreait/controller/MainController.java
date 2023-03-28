@@ -40,6 +40,11 @@ public class MainController {
 //    } // 이미있어서 주석처리
 
 
+    @PermitAll
+    @GetMapping("/main/naverMapTest")
+    public void map_test(){}
+
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/main/cart")
     public void cart(){ log.info("-------장바구니가즈아----------");}
