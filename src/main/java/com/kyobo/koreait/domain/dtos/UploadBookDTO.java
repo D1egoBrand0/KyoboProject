@@ -11,6 +11,10 @@ import java.util.List;
 @Data
 @ToString
 @AllArgsConstructor
-public class UploadFileDTO {
-    private List<MultipartFile> multipartFiles;
+public class UploadBookDTO {
+//    private List<MultipartFile> multipartFiles;
+    private MultipartFile mainImagefile;
+    private MultipartFile contentsImagefile;
+
+    private BookVO bookVO;
 }

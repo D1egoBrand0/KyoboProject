@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
 import java.awt.print.Book;
+import java.io.File;
 import java.util.List;
 
 @Log4j2
@@ -32,7 +33,7 @@ public class MainController {
     @GetMapping("/")
     public String main(){
        log.info(" -------  진짜 메인 페이지---------");
-       return "/main/main";
+       return "main/main";
     }
 
 //    @ResponseBody
@@ -46,17 +47,19 @@ public class MainController {
     @GetMapping("/main/naverMapTest")
     public void map_test(){}
 
-    @Value("${com.kyoubo.koreait.upload.path}")
-    private String uploadPath;
-    @ResponseBody
-    @PostMapping("/upload")
-    public void upload_file(UploadFileDTO uploadFileDTO){
-        if(uploadFileDTO.getFiles() != null){
-            uploadFileDTO.getFiles().forEach(multipartFile -> {
-                log.info(multipartFile.getOriginalFilename());
-            });
-        }
-    }
+//    @Value("${com.kyobo.koreait.upload.path}")
+//    private String uploadPath;
+//    @ResponseBody
+//    @PostMapping("/upload")
+//    public void upload_file(UploadFileDTO uploadFileDTO){
+//        if(uploadFileDTO.getMultipartFiles() != null){
+//            uploadFileDTO.getMultipartFiles().forEach(multipartFile -> {
+//                File file = new File("C://test/a.jpg");
+////                multipartFile.transferTo(file); // 익셉션 뜨지만, 정상작동은 한다고 함
+//                log.info(multipartFile.getOriginalFilename());
+//            });
+//        }
+//    }
 
 
     @PreAuthorize("isAuthenticated()")
@@ -77,7 +80,7 @@ public class MainController {
             return "/error/main";
         }
         model.addAttribute("bookVO",bookVO);
-        return "/main/details";
+        return "main/details";
     }
 
 //    @PermitAll
@@ -113,5 +116,11 @@ public class MainController {
         log.info("----------maincontroller 주문 확인----------");
     }
 
+
+
+    @GetMapping("/accessdenied")
+    public void access_denied(){
+        log.info("접근거부");
+    }
 
 }

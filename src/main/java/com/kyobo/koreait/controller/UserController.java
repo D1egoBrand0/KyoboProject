@@ -9,7 +9,6 @@ import com.kyobo.koreait.domain.vos.UserVO;
 import com.kyobo.koreait.mapper.UserMapper;
 import com.kyobo.koreait.service.UserService;
 import com.sun.org.apache.xpath.internal.operations.Bool;
-import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
