@@ -24,6 +24,12 @@
                 <a href="/user/logout">로그아웃</a>
                 <a href="/user/mypage">마이페이지</a>
             </th:block>
+            <th:block sec:authorize="isAuthenticated()" >
+                <a href="/main/cart"> 장바구니</a>
+                <a href="/admin/upload"> 관리자 업로드</a>
+                <a href="/user/logout">로그아웃</a>
+                <a href="/user/mypage">마이페이지</a>
+            </th:block>
         </div>
         <div id="search-all-things"> 통합검색 <input type="text" placeholder="검색어"> <input type="button" value="검색"></div>
 
